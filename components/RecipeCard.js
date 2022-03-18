@@ -7,7 +7,7 @@ const RecipeCard = ({ recipe }) => {
   const { width } = thumbnail.fields.file.details.image;
   const { height } = thumbnail.fields.file.details.image;
   return (
-    <li className="recipe-card">
+    <li className="recipe-card group">
       <Image
         src={thumbnailUrl}
         alt={title}
@@ -16,7 +16,7 @@ const RecipeCard = ({ recipe }) => {
         layout="responsive"
         objectFit="cover"
       />
-      <div className="recipe-card__details bg-white flex flex-col translate-y-[-8px] transition-transform duration-200 hover:rotate-0 ease-linear md:rotate-[-1deg]">
+      <div className="recipe-card__details group-hover:rotate-0 bg-white flex flex-col translate-y-[-8px] transition-transform duration-200  ease-linear md:rotate-[-1deg]">
         <div className="p-2 md:p-5">
           <h3 className="text-lg font-bold uppercase">{title}</h3>
           <p className="text-gray-500">
