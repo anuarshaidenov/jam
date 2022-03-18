@@ -1,6 +1,8 @@
 import { createClient } from 'contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Image from 'next/image';
+import Skeleton from '../../components/Skeleton';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -8,9 +10,24 @@ const client = createClient({
 });
 
 const RecipeDetails = ({ recipe }) => {
+  if (!recipe) return <Skeleton />;
+
   const { featuredImage, title, cookingTime, ingredients, method } =
     recipe.fields;
   const featuredImageUrl = `https:${featuredImage.fields.file.url}`;
+
+  const RICHTEXT_OPTIONS = {
+    renderNode: {
+      [BLOCKS.HEADING_4]: (node, children) => (
+        <h4 className="font-bold mb-2 text-lg">{children}</h4>
+      ),
+      [INLINES.HYPERLINK]: (node, children) => (
+        <a href={node.data.uri} className="underline capitalize">
+          {children}
+        </a>
+      ),
+    },
+  };
 
   return (
     <section className="min-h-screen py-8 container max-w-4xl w-11/12">
@@ -40,7 +57,7 @@ const RecipeDetails = ({ recipe }) => {
         )}
       </div>
       <h3 className="font-bold text-2xl uppercase mb-3">Method:</h3>
-      <div>{documentToReactComponents(method)}</div>
+      <div>{documentToReactComponents(method, RICHTEXT_OPTIONS)}</div>
     </section>
   );
 };
@@ -54,7 +71,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
