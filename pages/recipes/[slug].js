@@ -10,7 +10,7 @@ const client = createClient({
 const RecipeDetails = ({ recipe }) => {
   const { featuredImage, title, cookingTime, ingredients, method } =
     recipe.fields;
-  const featuredImageUrl = `https://${featuredImage.fields.file.url}`;
+  const featuredImageUrl = `https:${featuredImage.fields.file.url}`;
 
   return (
     <section className="min-h-screen py-8 container max-w-4xl w-11/12">
