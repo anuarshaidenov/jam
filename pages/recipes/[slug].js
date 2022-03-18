@@ -3,6 +3,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Image from 'next/image';
 import Skeleton from '../../components/Skeleton';
+import Head from 'next/head';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -30,35 +31,40 @@ const RecipeDetails = ({ recipe }) => {
   };
 
   return (
-    <section className="min-h-screen py-8 container max-w-4xl w-11/12">
-      <Image
-        src={featuredImageUrl}
-        alt={title}
-        width="900"
-        height="300"
-        objectFit="cover"
-      />
-      <h1 className="bg-white drop-shadow-md inline-block text-3xl font-bold uppercase p-3 translate-y-[-40px] rotate-[-3deg]">
-        {title}
-      </h1>
-      <p className="mb-3">Takes about {cookingTime} minutes to cook</p>
-      <h3 className="font-bold text-2xl uppercase mb-3">Ingredients:</h3>
-      <div className="mb-3">
-        {ingredients.map((ingredient, i) =>
-          i + 1 === ingredients.length ? (
-            <span className="" key={ingredient}>
-              {ingredient}.
-            </span>
-          ) : (
-            <span className="" key={ingredient}>
-              {ingredient},{' '}
-            </span>
-          )
-        )}
-      </div>
-      <h3 className="font-bold text-2xl uppercase mb-3">Method:</h3>
-      <div>{documentToReactComponents(method, RICHTEXT_OPTIONS)}</div>
-    </section>
+    <>
+      <Head>
+        <title>{title} Recipe Details</title>
+      </Head>
+      <section className="min-h-screen py-8 container max-w-4xl w-11/12">
+        <Image
+          src={featuredImageUrl}
+          alt={title}
+          width="900"
+          height="300"
+          objectFit="cover"
+        />
+        <h1 className="bg-white drop-shadow-md inline-block text-3xl font-bold uppercase p-3 translate-y-[-40px] rotate-[-3deg]">
+          {title}
+        </h1>
+        <p className="mb-3">Takes about {cookingTime} minutes to cook</p>
+        <h3 className="font-bold text-2xl uppercase mb-3">Ingredients:</h3>
+        <div className="mb-3">
+          {ingredients.map((ingredient, i) =>
+            i + 1 === ingredients.length ? (
+              <span className="" key={ingredient}>
+                {ingredient}.
+              </span>
+            ) : (
+              <span className="" key={ingredient}>
+                {ingredient},{' '}
+              </span>
+            )
+          )}
+        </div>
+        <h3 className="font-bold text-2xl uppercase mb-3">Method:</h3>
+        <div>{documentToReactComponents(method, RICHTEXT_OPTIONS)}</div>
+      </section>
+    </>
   );
 };
 

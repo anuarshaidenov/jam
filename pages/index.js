@@ -1,15 +1,22 @@
 import { createClient } from 'contentful';
+import Head from 'next/head';
 import RecipeCard from '../components/RecipeCard';
 
 export default function Recipes({ recipes }) {
   return (
-    <section className="container min-h-screen py-8 w-11/12 max-w-4xl">
-      <ul className="grid gap-5 md:gap-12 card-container">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.sys.id} recipe={recipe} />
-        ))}
-      </ul>
-    </section>
+    <>
+      <Head>
+        <title>Just Add Marmide | Home</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <section className="container min-h-screen py-8 w-11/12 max-w-4xl">
+        <ul className="grid gap-5 md:gap-12 card-container">
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.sys.id} recipe={recipe} />
+          ))}
+        </ul>
+      </section>
+    </>
   );
 }
 
