@@ -38,7 +38,7 @@ const RecipeDetails = ({ recipe }) => {
         height="300"
         objectFit="cover"
       />
-      <h1 className="bg-white inline-block text-3xl font-bold uppercase p-3 translate-y-[-40px] rotate-[-3deg]">
+      <h1 className="bg-white drop-shadow-md inline-block text-3xl font-bold uppercase p-3 translate-y-[-40px] rotate-[-3deg]">
         {title}
       </h1>
       <p className="mb-3">Takes about {cookingTime} minutes to cook</p>
@@ -80,6 +80,15 @@ export const getStaticProps = async ({ params: { slug } }) => {
     content_type: 'recipe',
     'fields.slug': slug,
   });
+
+  if (!items.length) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
