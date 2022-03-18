@@ -64,8 +64,6 @@ export const getStaticProps = async ({ params: { slug } }) => {
     'fields.slug': slug,
   });
 
-  console.log(items);
-
   return {
     props: {
       recipe: items[0],
